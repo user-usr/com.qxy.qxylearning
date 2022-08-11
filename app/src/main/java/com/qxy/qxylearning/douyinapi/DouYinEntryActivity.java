@@ -14,6 +14,7 @@ import com.bytedance.sdk.open.aweme.share.Share;
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.qxy.qxylearning.MainActivity;
+import com.qxy.qxylearning.MainActivity2;
 
 /**
  * 主要功能：接受授权返回结果的activity
@@ -42,7 +43,7 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
         if (resp.getType() == CommonConstants.ModeType.SHARE_CONTENT_TO_TT_RESP) {
             Share.Response response = (Share.Response) resp;
             Toast.makeText(this, " code：" + response.errorCode + " 文案：" + response.errorMsg, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(DouYinEntryActivity.this, MainActivity2.class);
             startActivity(intent);
         } else if (resp.getType() == CommonConstants.ModeType.SEND_AUTH_RESPONSE) {
             Authorization.Response response = (Authorization.Response) resp;
@@ -52,9 +53,12 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
                 Toast.makeText(this, "授权成功，获得权限：" + response.grantedPermissions,
                         Toast.LENGTH_LONG).show();
 
+                intent = new Intent(DouYinEntryActivity.this, MainActivity2.class);
+                intent.putExtra("code", response.authCode);
+
+                startActivity(intent);
             }
         }
-
     }
 
     @Override
@@ -63,3 +67,4 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
         Toast.makeText(this, "Intent出错", Toast.LENGTH_LONG).show();
     }
 }
+
