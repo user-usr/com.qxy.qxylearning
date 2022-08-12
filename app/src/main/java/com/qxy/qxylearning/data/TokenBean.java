@@ -5,7 +5,7 @@ public class TokenBean {
     private String message;
 
     public TokenBean(){
-        tokenData = new TokenData();
+        this.tokenData = new TokenData();
     }
 
     public TokenData getTokenData() {

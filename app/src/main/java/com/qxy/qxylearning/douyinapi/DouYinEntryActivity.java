@@ -54,8 +54,8 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
                         Toast.LENGTH_LONG).show();
 
                 intent = new Intent(DouYinEntryActivity.this, MainActivity2.class);
-                intent.putExtra("code", response.authCode);
 
+                intent.putExtra("code", response.authCode);
                 startActivity(intent);
             }
         }
