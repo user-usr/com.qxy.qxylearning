@@ -1,10 +1,10 @@
 package com.qxy.qxylearning.data;
 
 public class TokenBody {
-    private String client_secret;
+    private String client_secret = "900cb2f34b362f7c5d77c0ab419186c9";
     private String code;
     private String grant_type = "authorization_code";
-    private String client_key;
+    private String client_key = "awdvkxoqgq54bq16";
 
     public String getClient_secret() {
         return client_secret;

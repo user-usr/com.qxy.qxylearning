@@ -1,27 +1,29 @@
 package com.qxy.qxylearning;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.fastjson.JSONObject;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.qxy.qxylearning.data.TokenBean;
 import com.qxy.qxylearning.data.TokenBody;
 import com.qxy.qxylearning.data.authcode;
-import com.qxy.qxylearning.manager.Apimanager;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.io.IOException;
+import java.util.Map;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity2 extends AppCompatActivity {
 
     private static final String TAG = "code";
     private static final String TAG1 = "token";
     authcode authcode = new authcode();
-    Apimanager apimanager = new Apimanager();
     TokenBody tokenBody = new TokenBody();
+    TokenBean tokenBean = new TokenBean();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +43,20 @@ public class MainActivity2 extends AppCompatActivity {
                 tokenBody.setCode(authcode.getAuthcode());
                 tokenBody.setClient_key("awdvkxoqgq54bq16");
                 tokenBody.setClient_secret("900cb2f34b362f7c5d77c0ab419186c9");
-                Call<TokenBean> tokenBeanCall = apimanager.getMyApi().getToken(tokenBody);
-                tokenBeanCall.enqueue(new Callback<TokenBean>() {
-                    @Override
-                    public void onResponse(@NonNull Call<TokenBean> call, @NonNull Response<TokenBean> response) {
-                        assert response.body() != null;
-                        Log.i(TAG1, "token: " + response.body().getTokenData().getAccess_token());
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<TokenBean> call, @NonNull Throwable t) {
-                        Log.i(TAG1, "token: " + t.toString());
-                    }
-                });
+                try {
+                    String url = "https://open.douyin.com/" +"oauth/client_token/?client_key="+ tokenBody.getClient_key() +"&client_secret="+tokenBody.getClient_secret()+"&grant_type=client_credential"+"&code="+tokenBody.getCode();
+                    OkHttpClient okHttpClient = new OkHttpClient();
+                    Request request = new Request.Builder().url(url).build();
+                    Response response = okHttpClient.newCall(request).execute();
+                    String result = response.body().string();
+                    Map returnmap = (Map) JSONObject.parse(result);
+                    Map data = (Map) returnmap.get("data");
+                    tokenBean.getTokenData().setAccess_token((String) data.get("access_token"));
+                    tokenBean.getTokenData().setOpen_id((String) data.get("open_id"));
+                    Log.i(TAG1, "token: " + tokenBean.getTokenData().getAccess_token());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }

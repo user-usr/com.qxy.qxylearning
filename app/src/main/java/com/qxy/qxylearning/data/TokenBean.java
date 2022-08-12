@@ -4,6 +4,10 @@ public class TokenBean {
     private TokenData tokenData;
     private String message;
 
+    public TokenBean(){
+        tokenData = new TokenData();
+    }
+
     public TokenData getTokenData() {
         return tokenData;
     }
