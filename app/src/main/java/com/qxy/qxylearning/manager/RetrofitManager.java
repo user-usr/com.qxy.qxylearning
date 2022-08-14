@@ -57,12 +57,15 @@ public class RetrofitManager {
 
     public FilmBean getmovies(FilmBody filmBody) throws IOException {
         FilmBean moviesBean = new FilmBean();
-        filmBody.setType("1");
+        filmBody.setType(1);
 
         Map<String,String> heardmap = new HashMap<>();
         heardmap.put("Content-Type","application/json");
         heardmap.put("access-token", filmBody.getAccess_token());
-        Response<ResponseBody> response = myApi.getmovies(heardmap,filmBody.getType(), filmBody.getVersion()).execute();
+        Map<String,Integer> body = new HashMap<>();
+        body.put("type", filmBody.getType());
+        body.put("version", filmBody.getVersion());
+        Response<ResponseBody> response = myApi.getmovies(heardmap,body).execute();
         String result = response.body().string();
         Map resultmap =  (Map) JSONObject.parse(result);
         Map data = (Map) resultmap.get("data");

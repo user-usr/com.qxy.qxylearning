@@ -3,14 +3,13 @@ package com.qxy.qxylearning.data;
 public class FilmBody {
     private String Content_Type;
     private String access_token;
-    private String type;
-    private String version;
+    private int type;
+    private int version;
 
     public FilmBody(){
         this.access_token = null;
         this.Content_Type = "application/json";
-        this.type = "";
-        this.version = null;
+        this.type = 1;
     }
 
     public String getContent_Type() {
@@ -29,19 +28,19 @@ public class FilmBody {
         this.access_token = access_token;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public String getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 }
