@@ -20,6 +20,6 @@ public interface MyApi {
     @GET("oauth/access_token/")
     Call<ResponseBody> getaccess_token(@Query("client_secret") String client_secret, @Query("code") String code, @Query("grant_type") String grant_type, @Query("client_key") String client_key);
 
-    @GET("discovery/ent/rank/item/")
-    Call<ResponseBody> getmovies(@HeaderMap Map<String,String> flimmap, @Query("type") int type, @Query("version") String version);
+    @POST("discovery/ent/rank/item/")
+    Call<ResponseBody> getmovies(@HeaderMap Map<String,String> header, @Query("type") String type, @Query("version") String version);
 }

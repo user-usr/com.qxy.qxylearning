@@ -45,7 +45,7 @@ public class OkHttpManager {
 
     public FilmBean GetMovies(FilmBody filmBody) throws IOException {
         FilmBean filmBean = new FilmBean();
-        filmBody.setType(1);
+        filmBody.setType("1");
 
         String url = baseurl +"discovery/ent/rank/item/?access_token="+ filmBody.getAccess_token()+ "type="+ filmBody.getType() + "&version=" + null;
         OkHttpClient okHttpClient = new OkHttpClient();
