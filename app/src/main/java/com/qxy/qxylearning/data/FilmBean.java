@@ -14,4 +14,11 @@ public class FilmBean {
         public FilmData getData() {
             return filmData;
         }
+
+    @Override
+    public String toString() {
+        return "FilmBean{" +
+                "filmData=" + filmData +
+                '}';
+    }
 }

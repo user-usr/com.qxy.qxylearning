@@ -132,4 +132,25 @@ public class FilmList {
             return type;
         }
 
+    @Override
+    public String toString() {
+        return "FilmList{" +
+                "actors=" + actors +
+                ", areas=" + areas +
+                ", directors=" + directors +
+                ", discussion_hot='" + discussion_hot + '\'' +
+                ", hot='" + hot + '\'' +
+                ", id='" + id + '\'' +
+                ", influence_hot='" + influence_hot + '\'' +
+                ", maoyan_id='" + maoyan_id + '\'' +
+                ", name='" + name + '\'' +
+                ", name_en='" + name_en + '\'' +
+                ", poster='" + poster + '\'' +
+                ", release_date='" + release_date + '\'' +
+                ", search_hot='" + search_hot + '\'' +
+                ", tags=" + tags +
+                ", topic_hot='" + topic_hot + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
+}

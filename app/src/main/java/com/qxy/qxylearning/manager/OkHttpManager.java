@@ -2,14 +2,14 @@ package com.qxy.qxylearning.manager;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qxy.qxylearning.data.FilmBean;
 import com.qxy.qxylearning.data.FilmBody;
 import com.qxy.qxylearning.data.TokenBean;
 import com.qxy.qxylearning.data.TokenBody;
 
+
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -17,7 +17,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import com.alibaba.fastjson.JSONObject;
 public class OkHttpManager {
 
     private static final String TAG = "movi_data";

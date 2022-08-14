@@ -38,4 +38,14 @@ public class FilmData {
         public FilmList getList() {
             return filmList;
         }
+
+    @Override
+    public String toString() {
+        return "FilmData{" +
+                "active_time='" + active_time + '\'' +
+                ", description='" + description + '\'' +
+                ", error_code='" + error_code + '\'' +
+                ", filmList=" + filmList +
+                '}';
+    }
 }

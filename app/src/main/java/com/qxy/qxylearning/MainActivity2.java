@@ -11,6 +11,7 @@ import com.qxy.qxylearning.data.TokenBean;
 import com.qxy.qxylearning.data.TokenBody;
 import com.qxy.qxylearning.data.authcode;
 import com.qxy.qxylearning.manager.OkHttpManager;
+import com.qxy.qxylearning.manager.RetrofitManager;
 
 import java.io.IOException;
 
@@ -26,6 +27,8 @@ public class MainActivity2 extends AppCompatActivity {
     OkHttpManager okHttpManager = new OkHttpManager();
     FilmBean moviesBean = new FilmBean();
     FilmBody filmBody = new FilmBody();
+
+    RetrofitManager retrofitManager = new RetrofitManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,28 +46,45 @@ public class MainActivity2 extends AppCompatActivity {
                 tokenBody.setCode(authcode.getAuthcode());
 
                 try {
-                    tokenBean = okHttpManager.gettoken(tokenBody);
+                    tokenBean = retrofitManager.gettoken(tokenBody);
                     Log.i(TAG1, "token: " + tokenBean.getTokenData().getAccess_token());
                     Log.i(TAG1, "refresh_token: " + tokenBean.getTokenData().getRefresh_token());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-
+                filmBody.setAccess_token(tokenBean.getTokenData().getAccess_token());
                 try {
-                    new_tokenBean = okHttpManager.getrefreshtoken(tokenBean, tokenBody);
-                    Log.i(TAG1, "new_token: " + new_tokenBean.getTokenData().getAccess_token());
-                    Log.i(TAG1, "new_refresh_token: " + new_tokenBean.getTokenData().getRefresh_token());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                filmBody.setAccess_token(new_tokenBean.getTokenData().getAccess_token());
-                try {
-                    moviesBean = okHttpManager.GetMovies(filmBody);
+                    moviesBean = retrofitManager.getmovies(filmBody);
                     Log.i(TAG2, "movies_name: " + moviesBean.getData().getList().getName());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
+//                try {
+//                    tokenBean = okHttpManager.gettoken(tokenBody);
+//                    Log.i(TAG1, "token: " + tokenBean.getTokenData().getAccess_token());
+//                    Log.i(TAG1, "refresh_token: " + tokenBean.getTokenData().getRefresh_token());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//
+//                try {
+//                    new_tokenBean = okHttpManager.getrefreshtoken(tokenBean, tokenBody);
+//                    Log.i(TAG1, "new_token: " + new_tokenBean.getTokenData().getAccess_token());
+//                    Log.i(TAG1, "new_refresh_token: " + new_tokenBean.getTokenData().getRefresh_token());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                filmBody.setAccess_token(new_tokenBean.getTokenData().getAccess_token());
+//                try {
+//                    moviesBean = okHttpManager.GetMovies(filmBody);
+//                    Log.i(TAG2, "movies_name: " + moviesBean.getData().getList().getName());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
         }).start();
     }

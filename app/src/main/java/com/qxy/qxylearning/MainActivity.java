@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<String> mUri = new ArrayList<>();
 
-    private String mScope = "user_info,discovery.ent";
+    private String mScope = "user_info,discovery.ent,trial.whitelist";
     private String mOptionalScope1 = "friend_relation";
     private String mOptionalScope2 = "message";
 
