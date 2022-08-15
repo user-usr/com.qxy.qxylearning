@@ -4,12 +4,13 @@ public class FilmBody {
     private String Content_Type;
     private String access_token;
     private int type;
-    private int version;
+    private String version;
 
     public FilmBody(){
         this.access_token = null;
         this.Content_Type = "application/json";
         this.type = 1;
+        this.version = null;
     }
 
     public String getContent_Type() {
@@ -36,11 +37,11 @@ public class FilmBody {
         this.type = type;
     }
 
-    public int getVersion() {
+    public String getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(String version) {
         this.version = version;
     }
 }

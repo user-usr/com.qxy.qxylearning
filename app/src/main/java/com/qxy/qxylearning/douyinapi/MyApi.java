@@ -23,5 +23,5 @@ public interface MyApi {
     Call<ResponseBody> getaccess_token(@Query("client_secret") String client_secret, @Query("code") String code, @Query("grant_type") String grant_type, @Query("client_key") String client_key);
 
     @POST("discovery/ent/rank/item/")
-    Call<ResponseBody> getmovies(@HeaderMap Map<String,String> header, @QueryMap Map<String,Integer> body);
+    Call<ResponseBody> getmovies(@Header("access-token") String access_token, @Query("type") int type, @Query("version") String version);
 }
