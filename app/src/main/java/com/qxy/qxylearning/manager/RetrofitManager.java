@@ -13,6 +13,9 @@ import com.qxy.qxylearning.data.FilmList;
 import com.qxy.qxylearning.data.TokenBean;
 import com.qxy.qxylearning.data.TokenBody;
 import com.qxy.qxylearning.data.TokenData;
+import com.qxy.qxylearning.data.UserInformationBean;
+import com.qxy.qxylearning.data.UserInformationBody;
+import com.qxy.qxylearning.data.UserInformationData;
 import com.qxy.qxylearning.douyinapi.MyApi;
 
 import java.io.IOException;
@@ -20,9 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitManager {
 
@@ -35,7 +41,7 @@ public class RetrofitManager {
         this.baseurl = "https://open.douyin.com/";
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(this.baseurl)
-//                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
         this.myApi = retrofit.create(MyApi.class);
     }
@@ -43,23 +49,33 @@ public class RetrofitManager {
     public TokenBean gettoken(TokenBody tokenBody) throws IOException {
         TokenBean tokenBean;
 
-        Response<ResponseBody> response = myApi.getaccess_token(tokenBody.getClient_secret(),tokenBody.getCode(),tokenBody.getGrant_type(),tokenBody.getClient_key()).execute();
+//        Response<ResponseBody> response = myApi.getaccess_token(tokenBody.getClient_secret(),tokenBody.getCode(),tokenBody.getGrant_type(),tokenBody.getClient_key()).execute();
+        Response<ResponseBody> response = myApi.getaccess_token(tokenBody).execute();
+//        tokenBean = tokenBeanResponse.body();
         String result = response.body().string();
+        Log.i(TAG, "gettoken: " + result);
         Map resultmap = (Map) JSONObject.parse(result);
         Map data = (Map) resultmap.get("data");
         String token_data = new Gson().toJson(data).toString();
         tokenBean = new Gson().fromJson(result, TokenBean.class);
         tokenBean.setTokenData(new Gson().fromJson(token_data, TokenData.class));
+        Log.i(TAG, "gettoken: " + tokenBean.toString());
 
         return  tokenBean;
 
     }
 
-    public FilmBean getmovies(FilmBody filmBody) throws IOException {
+    public FilmBean getmovies(FilmBody filmBody, String access_token) throws IOException {
         FilmBean moviesBean = new FilmBean();
-        filmBody.setType(1);
+        filmBody.setType("1");
 
-        Response<ResponseBody> response = myApi.getmovies(filmBody.getAccess_token(), filmBody.getType(), filmBody.getVersion()).execute();
+//        发送请求
+        Map<String,String> heardmap = new HashMap<>();
+        heardmap.put("Content-Type", "application/json");
+        heardmap.put("access-token", access_token);
+        Response<ResponseBody> response = myApi.getmovies(heardmap, filmBody.getType(), null).execute();
+
+//        请求结果处理
         String result = response.body().string();
         Map resultmap =  (Map) JSONObject.parse(result);
         Map data = (Map) resultmap.get("data");
@@ -68,8 +84,27 @@ public class RetrofitManager {
         String data_data = new Gson().toJson(data).toString();
         moviesBean.getData().setList(new Gson().fromJson(list_data, FilmList.class));
         moviesBean.setData(new Gson().fromJson(data_data, FilmData.class));
-        Log.i(TAG, "getmovies: " + moviesBean.toString());
+        Log.i(TAG, "getmovies: " + result);
 
         return moviesBean;
+    }
+
+    public UserInformationBean getuserinformation(UserInformationBody userInformationBody) throws IOException {
+        UserInformationBean userInformationBean = new UserInformationBean();
+
+        Map<String,String> heardmap = new HashMap<>();
+        heardmap.put("Content-Type", "application/json");
+        heardmap.put("access-token", userInformationBody.getAccess_token());
+
+        Response<ResponseBody> response = myApi.getuserinformation(heardmap, userInformationBody).execute();
+        String result = response.body().string();
+        Map resultmap = (Map) JSONObject.parse(result);
+        Map data = (Map) resultmap.get("data");
+        String data_data = new Gson().toJson(data).toString();
+        userInformationBean.setUserInformationData(new Gson().fromJson(data_data, UserInformationData.class));
+        Log.i(TAG, "getuserinformation: " + userInformationBean.toString());
+
+        return userInformationBean;
+
     }
 }

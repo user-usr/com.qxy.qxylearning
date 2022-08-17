@@ -9,6 +9,8 @@ import com.qxy.qxylearning.data.FilmBean;
 import com.qxy.qxylearning.data.FilmBody;
 import com.qxy.qxylearning.data.TokenBean;
 import com.qxy.qxylearning.data.TokenBody;
+import com.qxy.qxylearning.data.UserInformationBean;
+import com.qxy.qxylearning.data.UserInformationBody;
 import com.qxy.qxylearning.data.authcode;
 import com.qxy.qxylearning.manager.OkHttpManager;
 import com.qxy.qxylearning.manager.RetrofitManager;
@@ -24,9 +26,10 @@ public class MainActivity2 extends AppCompatActivity {
     TokenBody tokenBody = new TokenBody();
     TokenBean tokenBean = new TokenBean();
     TokenBean new_tokenBean = new TokenBean();
-    OkHttpManager okHttpManager = new OkHttpManager();
     FilmBean moviesBean = new FilmBean();
     FilmBody filmBody = new FilmBody();
+    UserInformationBean userInformationBean = new UserInformationBean();
+    UserInformationBody userInformationBody = new UserInformationBody();
 
     RetrofitManager retrofitManager = new RetrofitManager();
 
@@ -53,9 +56,16 @@ public class MainActivity2 extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                filmBody.setAccess_token(tokenBean.getTokenData().getAccess_token());
+//                userInformationBody.setAccess_token(tokenBean.getTokenData().getAccess_token());
+//                userInformationBody.setOpen_id(tokenBean.getTokenData().getOpen_id());
+//                try {
+//                    userInformationBean = retrofitManager.getuserinformation(userInformationBody);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+
                 try {
-                    moviesBean = retrofitManager.getmovies(filmBody);
+                    moviesBean = retrofitManager.getmovies(filmBody,tokenBean.getTokenData().getAccess_token());
                     Log.i(TAG2, "movies_name: " + moviesBean.getData().getList().getName());
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -43,33 +43,33 @@ public class OkHttpManager {
         return tokenBean;
     }
 
-    public FilmBean GetMovies(FilmBody filmBody) throws IOException {
-        FilmBean filmBean = new FilmBean();
-        filmBody.setType(1);
-
-        String url = baseurl +"discovery/ent/rank/item/?access_token="+ filmBody.getAccess_token()+ "type="+ filmBody.getType() + "&version=" + null;
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        Response response = okHttpClient.newCall(request).execute();
-        String result = Objects.requireNonNull(response.body()).string();
-        Map returnmap = (Map) JSONObject.parse(result);
-        Map data = (Map) returnmap.get("data");
-        assert data != null;
-        Log.i(TAG, "GetMovies: " + data.toString());
-        Log.i(TAG, "move_token: " + filmBody.getAccess_token());
-//        Map list = (Map) data.get("list");
-//        filmBean.getData().setActive_time((String) data.get("active_time"));
-//        filmBean.getData().getList().setActors(Arrays.asList(list.get("actors").toString()));
-//        filmBean.getData().getList().setAreas(Arrays.asList(list.get("areas").toString()));
-//        filmBean.getData().getList().setDirectors(Arrays.asList(list.get("directors").toString()));
-//        filmBean.getData().getList().setName((String) list.get("name"));
-//        filmBean.getData().getList().setName_en((String) list.get("name_en"));
-//        filmBean.getData().getList().setTags(Arrays.asList(list.get("tags").toString()));
-
-        return filmBean;
-    }
+//    public FilmBean GetMovies(FilmBody filmBody) throws IOException {
+//        FilmBean filmBean = new FilmBean();
+//        filmBody.setType(1);
+//
+//        String url = baseurl +"discovery/ent/rank/item/?access_token="+ filmBody.getAccess_token()+ "type="+ filmBody.getType() + "&version=" + null;
+//        OkHttpClient okHttpClient = new OkHttpClient();
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .build();
+//        Response response = okHttpClient.newCall(request).execute();
+//        String result = Objects.requireNonNull(response.body()).string();
+//        Map returnmap = (Map) JSONObject.parse(result);
+//        Map data = (Map) returnmap.get("data");
+//        assert data != null;
+//        Log.i(TAG, "GetMovies: " + data.toString());
+//        Log.i(TAG, "move_token: " + filmBody.getAccess_token());
+////        Map list = (Map) data.get("list");
+////        filmBean.getData().setActive_time((String) data.get("active_time"));
+////        filmBean.getData().getList().setActors(Arrays.asList(list.get("actors").toString()));
+////        filmBean.getData().getList().setAreas(Arrays.asList(list.get("areas").toString()));
+////        filmBean.getData().getList().setDirectors(Arrays.asList(list.get("directors").toString()));
+////        filmBean.getData().getList().setName((String) list.get("name"));
+////        filmBean.getData().getList().setName_en((String) list.get("name_en"));
+////        filmBean.getData().getList().setTags(Arrays.asList(list.get("tags").toString()));
+//
+//        return filmBean;
+//    }
 
     public TokenBean getrefreshtoken(TokenBean tokenBean, TokenBody tokenBody) throws IOException {
         TokenBean new_tokenBean = new TokenBean();
